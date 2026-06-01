@@ -13,17 +13,21 @@ def form_stats(name="stats.json"):
 def bar_chart(categories):
     plt.figure(figsize=(8,5))
     plt.bar(categories.keys(),categories.values(),color="navy")
-    plt.title("Стобчатая диаграмма для иллюстрации количества писем по категориям")
+    plt.title("Столбчатая диаграмма для иллюстрации количества писем по категориям", fontsize=12)
     plt.xlabel("Категории")
     plt.ylabel("Количество")
+    plt.xticks(rotation=45, ha="right")
+    plt.tight_layout()  
     plt.savefig("bar_chart.png")
     plt.close()
 
 def pie_chart(categories):
-    plt.figure(figsize=(6,6))
-    plt.pie(categories.values(),labels=categories.keys(),autopct="%1.1f%%")
-    plt.title("Круговая диаграмма для иллюстрации распределения писем по категориям")
-    plt.savefig("pie_chart.png")
+    plt.figure(figsize=(10,6))
+    wedges, texts, autotexts = plt.pie(categories.values(),autopct="%1.1f%%")
+    plt.legend(wedges, categories.keys(), title="Категории", loc="center left", bbox_to_anchor=(1, 0.5))
+    plt.title("Круговая диаграмма для иллюстрации распределения писем по категориям", fontsize=12)
+    plt.tight_layout()  
+    plt.savefig("pie_chart.png", bbox_inches="tight")
     plt.close()
     
     
