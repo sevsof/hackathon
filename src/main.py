@@ -20,7 +20,6 @@ def main():
     mail_fold.createFolder()
     mail_logg = MailLogger()
     mail_classif = Classifier()
-    categories = mail_classif.get_categories()
     for x in mail:
         categ = mail_classif.classify(x)
         mail_logg.log_email(x.filename, categ)
