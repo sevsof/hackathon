@@ -21,7 +21,7 @@ class EmailReader:
             if not os.path.isfile(full_path):
                 continue
             if filename.startswith("."):
-                self._note(filename, "пропущен системный файл")
+                self.note(filename, "пропущен системный файл")
                 continue
 
             emails.append(self.read_one(filename))
@@ -33,27 +33,27 @@ class EmailReader:
             with open(full_path, encoding="utf-8") as file:
                 text = file.read()
         except UnicodeDecodeError:
-            self._note(filename, "не текстовый файл, не читается как письмо")
+            self.note(filename, "не текстовый файл, не читается как письмо")
             return Email(filename, status="broken", reason="бинарный/нечитаемый файл")
         except OSError as error:
-            self._note(filename, f"ошибка открытия: {error}")
+            self.note(filename, f"ошибка открытия: {error}")
             return Email(filename, status="broken", reason="файл не открылся")
 
         if text.strip() == "":
-            self._note(filename, "пустой файл")
+            self.note(filename, "пустой файл")
             return Email(filename, status="broken", reason="пустой файл")
 
         if filename.endswith(".json"):
-            return self._parse_json(filename, text)
+            return self.parse_json(filename, text)
 
         subject, sender, body = self.parse(text)
         return Email(filename, subject, sender, body)
 
-    def _parse_json(self, filename, text):
+    def parse_json(self, filename, text):
         try:
             data = json.loads(text)
         except ValueError:
-            self._note(filename, "повреждённый json")
+            self.note(filename, "повреждённый json")
             return Email(filename, status="broken", reason="повреждённый json")
         return Email(
             filename,
@@ -76,22 +76,21 @@ class EmailReader:
         subject = ""
         sender = ""
         for line in header_part.split("\n"):
-            value = self._value_after(line, self.SUBJECT_PREFIXES)
+            value = self.value_after(line, self.SUBJECT_PREFIXES)
             if value is not None:
                 subject = value
                 continue
-            value = self._value_after(line, self.SENDER_PREFIXES)
+            value = self.value_after(line, self.SENDER_PREFIXES)
             if value is not None:
                 sender = value
 
         return subject, sender, body.strip()
 
-    def _value_after(self, line, prefixes):
-
+    def value_after(self, line, prefixes):
         for prefix in prefixes:
             if line.startswith(prefix):
                 return line[len(prefix):].strip()
         return None
 
-    def _note(self, filename, message):
+    def note(self, filename, message):
         self.log.append(f"[{filename}] {message}")
