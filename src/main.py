@@ -21,16 +21,20 @@ def main():
     reader = EmailReader(INBOX_DIR)
     mail = reader.read_all()
     print(f"НАЙДЕНО ПИСЕМ: {len(mail)}")
-    categories = ["spam", "critical_incidents", "access_requests", "software_issues", "hardware_issues", "monitorng_alerts", "documents_and_finance", "hr_and_meetings"]
+    mail_classif = EmailClassifier()
+    for x in mail:
+       x.category = mail_classif.classify(x)
+    categories = []
+    for x in mail:
+      if x.category not in categories:
+          categories.append(x.category)
     mail_fold = MoveToFolder("newfolders", categories)
     mail_fold.createFolder()
     mail_logg = MailLogger()
-    mail_classif = EmailClassifier()
     for x in mail:
-        categ = mail_classif.classify(x)
-        mail_logg.log_email(x.filename, categ)
-        mail_fold.moveToFolder(x, "inbox", categ)
-        print(f"{x.filename} в категории {categ}" )
+        mail_logg.log_email(x.filename, x.category)
+        mail_fold.moveToFolder(x, INBOX_DIR, x.category)
+        print(f"{x.filename} в категории {x.category}" )
     mail_logg.save_logs()
     mail_logg.save_stats()
     
