@@ -1,7 +1,7 @@
 from reader import EmailReader
 from logger import MailLogger
 from moveToFolder import MoveToFolder
-from classifier import Classifier
+from classifier import EmailClassifier
 from visualization import form_stats, bar_chart, pie_chart, generate_html_report
 import webbrowser
 import os
@@ -19,7 +19,7 @@ def main():
     mail_fold = MoveToFolder("newfolders", categories)
     mail_fold.createFolder()
     mail_logg = MailLogger()
-    mail_classif = Classifier()
+    mail_classif = EmailClassifier()
     for x in mail:
         categ = mail_classif.classify(x)
         mail_logg.log_email(x.filename, categ)
