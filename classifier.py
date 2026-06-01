@@ -120,11 +120,9 @@ CATEGORY_ORDER = [
 ]
 
 def classify_email(email):
-    if getattr(email, "status", "ok") != "ok":
+    if email.status != "ok":
         return "unreadable"
-    subject = getattr(email, "subject", "") or ""
-    body = getattr(email, "body", "") or ""
-    text = f"{subject} {body}".lower()
+    text = f"{email.subject} {email.body}".lower()
     for category in CATEGORY_ORDER:
         for keyword in KEYWORDS[category]:
             if keyword in text:
