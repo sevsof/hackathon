@@ -24,7 +24,7 @@ def main():
     for x in mail:
         categ = mail_classif.classify(x)
         mail_logg.log_email(x.filename, categ)
-        mail_fold.moveToFolder(email, "inbox", category)
+        mail_fold.moveToFolder(x, "inbox", categ)
         print(f"{x.filename} в категории {categ}" )
     mail_logg.save_logs()
     mail_logg.save_stats()
