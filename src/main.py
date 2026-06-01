@@ -15,7 +15,7 @@ def main():
     reader = EmailReader('inbox')
     mail = reader.read_all()
     print(f"НАЙДЕНО ПИСЕМ: {len(mail)}")
-    categories = [] //дописать
+    categories = ["spam", ""]
     mail_fold = MoveToFolder("newfolders", categories)
     mail_fold.createFolder()
     mail_logg = MailLogger()
