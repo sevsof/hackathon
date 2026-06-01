@@ -7,6 +7,7 @@ class Email:
         self.body = body
         self.status = status    
         self.reason = reason
+        self.category = "" 
 
     def __repr__(self):
         return (f"Email(filename={self.filename!r}, status={self.status!r}, "
