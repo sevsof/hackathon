@@ -6,16 +6,22 @@ from visualization import form_stats, bar_chart, pie_chart, generate_html_report
 import webbrowser
 import os
 
+
+
 def main():
     print("="*60)
     print("АВТОМАТИЗИРОВАННАЯ СИСТЕМА ОБРАБОТКИ КОРПОРАТИВНОЙ ПОЧТЫ")
     print("="*60)
     print("НАЧАЛО РАБОТЫ ПРОГРАММЫ")
     print("="*60)
-    reader = EmailReader('inbox')
+    
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+    INBOX_DIR = os.path.join(BASE_DIR, '..', 'inbox')
+    TEMPLATE_PATH = os.path.join(BASE_DIR, '..', 'template.html')
+    reader = EmailReader(INBOX_DIR)
     mail = reader.read_all()
     print(f"НАЙДЕНО ПИСЕМ: {len(mail)}")
-    categories = ["spam", "critical_incidents", "access_requests", "software_issues", "hardware_issues", "monitoring_alerts", "documents_and_finance", "hr_and_meetings"]
+    categories = ["spam", "critical_incidents", "access_requests", "software_issues", "hardware_issues", "monitorng_alerts", "documents_and_finance", "hr_and_meetings"]
     mail_fold = MoveToFolder("newfolders", categories)
     mail_fold.createFolder()
     mail_logg = MailLogger()
@@ -33,7 +39,7 @@ def main():
         
         bar_chart(categories)
         pie_chart(categories)
-        generate_html_report(categories, total_emails, template_name="template.html", report_name="report.html")
+        generate_html_report(categories, total_emails, TEMPLATE_PATH, report_name="report.html")
         file_path = f"file://{os.path.abspath('report.html')}"
         
         print("Открываю отчет в браузере...")
