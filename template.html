@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Аналитический отчет</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 { border-bottom: 2px solid navy; padding-bottom: 10px; }
+        .stats-summary {
+            font-size: 18px;
+            background: #e9f2fb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .chart-box {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        img { max-width: 100%; height: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th { background-color: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Отчет по обработке корпоративной почты</h1>
+        
+        <div class="stats-summary">
+            <strong>Всего обработано писем:</strong> $total_emails
+        </div>
+
+        <div class="charts-container">
+            <div class="chart-box">
+                <img src="pie_chart.png" alt="Круговая диаграмма">
+            </div>
+            <div class="chart-box">
+                <img src="bar_chart.png" alt="Столбчатая диаграмма">
+            </div>
+        </div>
+
+        <h2>Детализация по категориям</h2>
+        <table>
+            <tr>
+                <th>Категория</th>
+                <th>Количество обращений</th>
+            </tr>
+            $table_rows
+        </table>
+    </div>
+</body>
+</html>
