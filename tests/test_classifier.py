@@ -1,5 +1,5 @@
-from classifier import classify_email
-from models import Email
+from hackathon.src.classifier import classify_email
+from hackathon.src.models import Email
 
 def test_spam():
   email = Email(
