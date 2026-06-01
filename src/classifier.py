@@ -110,10 +110,10 @@ class EmailClassifier:
 
     CATEGORY_ORDER = [
         "spam",
+        "hardware_issues",
         "critical_incidents",
         "monitoring_alerts",
         "access_requests",
-        "hardware_issues",
         "software_issues",
         "documents_and_finance",
         "hr_and_meetings"]
